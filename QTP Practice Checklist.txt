@@ -1,0 +1,304 @@
+                                      Year 2009
+Questions:
+
+1. Put a Checkpoint in Descriptive programming.
+2. Find out how many links on a web page.
+3. Driver Script.(Write code on notepad and save as vbs)
+4. xlread function
+5. ClickLink Function.
+6. ODBC Connection.
+7. Parametarization.
+7.1 Put a standard checkpoint after recording from active screen
+8. moduler test.
+9. Dynamic Synchronization.
+10. Run 3 script in bach runner.
+11. Recovery scenario.
+
+
+
+
+
+
+=================================SOLUTIONS=============================================
+ss
+
+1. Putting Checkpoint in Descriptive programming.
+
+ans:++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Systemutil.Run"iexplore.exe","www.peoplentech.com"
+Browser("micclass:=Browser").Page("micclass:=Page").WebEdit("micclass:=WebEdit","name:=user").set "limon"
+Browser("micclass:=Browser").Page("micclass:=Page").WebEdit("micclass:=WebEdit","name:=passwrd").SetSecure "4fd3cffe6b41e7b154fe1a3c496728c99f419f36eb9574ebe090b7e7"
+Browser("micclass:=Browser").Page("micclass:=Page").WebButton("micclass:=WebButton","name:=Login").Click
+
+
+If Browser("micclass:=Browser").Page("micclass:=Page").WebElement("micclass:=WebElement","html id:=logo").Exist then
+Reporter.ReportEvent micPass ,"Login checkpoint","login successful"
+else
+Reporter.ReportEvent micFail, "Login Checkpoint","Login not successfull"
+end if
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+2. Find out how many links on a web page.
+
+ans: ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Systemutil.Run "iexplore.exe","www.yahoo.com"
+Set wBrowser=Description.Create
+wBrowser("micclass").value="Browser"
+Set wPage=Description.Create
+wPage("micclass").value="Page"
+Set wLink=Description.Create
+wLink("micclass").Value="Link"
+
+Set cLinks=Browser(wBrowser).Page(wPage).ChildObjects(wLink)
+linkcount=cLinks.count
+msgbox linkcount
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3. Driver Script
+
+ans:
+
+dim app
+set app=CreateObject("QuickTest.Application")
+app.launch
+app.visible=true
+
+dim testarray(2)
+
+testarray(0)="C:\Program Files\HP\QuickTest Professional\Tests\Test_DATA_DRIVER_SCRIPT\1.DriverScriptTestDATA1"
+testarray(1)="C:\Program Files\HP\QuickTest Professional\Tests\Test_DATA_DRIVER_SCRIPT\2.DriverScriptTestDATA2"
+testarray(2)="C:\Program Files\HP\QuickTest Professional\Tests\Test_DATA_DRIVER_SCRIPT\2.DriverScriptTestDATA2"
+
+
+For  i=0 to uBound(testarray)
+     app.open testarray(i)
+     app.test.run
+     app.test.close
+Next
+
+app.quit
+set app=Nothing
+
+******************************************************DUPLICATE***************************************************
+Dim qtp_app
+
+Dim myoutlook,myoutlookmsg, doc
+set qtp_app=CreateObject("QuickTest.Application")
+qtp_app.Launch
+qtp_app.Visible=True
+
+Dim testArray(1)
+'testArray(1)="C:\Program Files\HP\QuickTest Professional\Tests\ForumRecordCreateModifyDeleteActions111812Updatemode"
+'testArray(2)="C:\Program Files\HP\QuickTest Professional\Tests\MCWebtableCheckpoint112412"
+testArray(1)="C:\Program Files\HP\QuickTest Professional\Tests\MCFramework111112Script6EnvironmentExcelDataExcelReadWrite"
+
+For i=1 to UBound(testArray)
+   qtp_app.open testArray(i), True
+   qtp_app.Test.Run, True
+   qtp_app.Test.Close
+Next
+
+qtp_app.Quit
+
+Set qtp_app=Nothing
+
+
+Set myoutlook=CreateObject("Outlook.Application")
+Set myoutlookmsg=myoutlook.CreateItem(olMailItem)
+
+myoutlookmsg.To="abmhanip@yahoo.com" & ";" & "abuhanip@yahoo.com" & ";" & "pnttest02@yahoo.com"
+myoutlookmsg.cc="ahanip@peoplentech.com"
+myoutlookmsg.Bcc="ahanip@gmail.com"
+myoutlookmsg.Subject="Mortgagecalculaor.org monthly payment and Mortgagecalculatorplus.com monthly payment  comparison"
+myoutlookmsg.Body="Mortgagecalculaor.org monthly payment and Mortgagecalculaorplus.com monthly payment  comparison"
+
+'Define a file for attachment
+
+doc="C:\Program Files\HP\QuickTest Professional\Tests\MCFramework111112Script6EnvironmentExcelDataExcelReadWrite\MC_Datasheet.xlsx"
+
+
+'Add the attachments to the mail
+
+myoutlookmsg.Attachments.Add(doc)
+
+'Oneway to send the mail
+myoutlookmsg.Send
+
+'Another way to send the mail
+
+'Set wshell=CreateObject("WScript.Shell")
+'wshell.Sendkeys "%S"
+'wshell.Sendkeys "(%FE)"
+
+
+Set myoutlookmsg=Nothing
+Set myoutlook=Nothing
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4.xlread function
+
+ans:
+
+
+Function fxlread(xlpath,xlsheet,row,col)                           'providing 4 arguments.                           
+   Set myxlapp=CreateObject("Excel.Application")                   'creating excel app.
+         myxlapp.Workbooks.Open xlpath                             'opening the workbook
+	Set myxlsheet=myxlapp.ActiveWorkbook.Worksheets(xlsheet)   'creating variable for worksheet
+	xlread=myxlsheet.cells(row,col)                            ' putting cell value in a variable
+	msgbox xlread                                              'seeing the variable value
+	myxlapp.ActiveWorkbook.Close                               'closing the active workbook
+	myxlapp.Application.Quit                                   'quiting the app
+	Set myxlapp=Nothing                                        'making the object empty
+	Set myxlsheet=Nothing                                      'creating the variable empty
+End Function
+
+fxlread "C:\Program Files\HP\QuickTest Professional\Tests\XLREAD_TESTDATA","Sheet1","3","B"
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+5. ClickLink Function
+
+ans:
+
+
+systemutil.Run"iexplore.exe","www.yahoo.com"
+Set wBrowser=Description.Create
+wBrowser("micclass").value="Browser"
+Set wPage=Description.Create
+wPage("micclass").value="Page"
+
+
+clicklink wBrowser,wPage, "Mail "
+
+
+Function clicklink (wBrowser,wPage,linkname)
+   Set wLink=Description.Create
+   wLink("micclass").value="Link"
+   Set clinks=Browser(wBrowser).Page(wPage).ChildObjects(wLink)
+   linkcount=clinks.count
+   msgbox linkcount
+   For i=0 to linkcount-1
+	   If clinks(i).GetROProperty("name")=linkname Then
+		   clinks(i).click
+		   wait 1
+		   Exit For
+	   End If
+    Next
+End Function
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6. ODBC Connection practice code..
+
+ans:
+                                                                   ,for farther practice code, i should go to the other notepad file that was uploaded to pnt fomum by azziz bhai.
+mydsn="dsn=Yahoo_Login_Id;uid=hr;pwd=hr;"
+mysql="Select * from Yahoo_Login"
+Set con=CreateObject("ADODB.Connection")
+Set rs=CreateObject("ADODB.RecordSet")
+
+con.Open mydsn
+msgbox "Connection has been stablished"
+
+rs.Open mysql,con
+msgbox "Record Set has been read"
+Do while not rs.EOF
+	row=row+1
+	rs.MoveNext
+Loop
+msgbox "Total Number of row in the record set is  " & row
+
+fldcount= rs.Fields.Count
+msgbox "Total Number of fields in a row of the record set is:  " & fldcount
+
+***************************************DUPLICATE***************************************************
+
+mydsn="dsn=Yahoo_Login_ID;uid=hr;pwd=hr;"
+mysql="Select * from Yahoo_Login"
+Set con=CreateObject("ADODB.Connection")
+Set rs=CreateObject("ADODB.RecordSet")
+
+DataTable.GlobalSheet.AddParameter "User_ID",""
+DataTable.GlobalSheet.AddParameter "Password",""
+con.Open mydsn
+msgbox "Connection has been stablished"
+rs.Open mysql,con
+msgbox "Record set has been read"
+Do while not rs.EOF
+	row=row+1
+	rs.MoveNext
+Loop
+msgbox "Total Number of row in the recordset is    " & row
+fieldcount=rs.Fields.Count
+msgbox "Total Number of column in the Record set" & fieldcount
+rs.MoveFirst
+row=0
+Do while not rs.EOF
+	For col=0 to fieldcount-1
+		DataTable.Value(col+1,"Global")=rs.Fields(col)
+
+	Next
+	DataTable.SetCurrentRow(row+2)
+	rs.MoveNext
+	row=row+1
+Loop
+For k= 1 to 4
+	DataTable.SetCurrentRow(k)
+	YahooID=DataTable.Value("User_ID", "Global")
+	YahooID=Trim(YahooID)
+	YahooPassword=DataTable.Value("Password","Global")
+	YahooPassword=Trim(YahooPassword)
+	msgbox YahooID & "        " & YahooPassword
+
+Next
+
+
+
+*************************************************************************************************************
+*************************************************************************************************************
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+7. Parametarization.
+
+do it yourself
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+8. Moduler Test.
+do it yourself
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+9. Dynamic Synchronization
+
+               'Static Synchronization
+               'Wait(20)
+               'Dynamic Synchronization
+Dim v_syn
+v_syn=Browser("Browser").Page("- Index").Link("Search").Exist 
+counter=1 
+While Not v_syn
+       Wait (2) 
+       v_syn=Browser("Browser").Page("- Index").Link("Search").Exist 
+       counter=counter+1 
+       If counter=10 then 
+              v_syn=True 
+       End if 
+Wend
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+10. run 3 script in batch runner.
+    a. verify that "Tools>options>run>Allow other HP Products to run tests and components" is checked.
+    b. Close QTP and open batch runner"Start>all program>quick test professional>tools>Test Bach Runner".
+    c. add 3 tests in the test batch runner.
+    d. open QTP. Run tests from test batch runner.
+Note: QTP Can't be opened before test batch runner. Test batch runner needs to open frist then QTP.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+11. Recovery Scenerio.
+do it yourself.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
