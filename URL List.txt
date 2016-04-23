@@ -1,3 +1,15 @@
 **ChromeDriver Server for Selenium
 http://chromedriver.storage.googleapis.com/index.html?path=2.21/
-**
+** XPath Syntax
+http://www.w3schools.com/xsl/xpath_syntax.asp
+** CSS Selector
+http://code.tutsplus.com/tutorials/the-30-css-selectors-you-must-memorize--net-16048
+** CSS Selectors
+http://www.w3schools.com/cssref/css_selectors.asp
+** Java API Sample
+http://selenium.googlecode.com/git/docs/api/java/index.html
+** JDK Installation link
+http://www.oracle.com/technetwork/java/javase/downloads/index.html
+** mavan installation path
+http://maven.apache.org/download.html 
+
