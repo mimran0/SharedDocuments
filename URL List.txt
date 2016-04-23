@@ -12,4 +12,6 @@ http://selenium.googlecode.com/git/docs/api/java/index.html
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 ** mavan installation path
 http://maven.apache.org/download.html 
+** maven central repository
+http://search.maven.org/#artifactdetails%7Corg.seleniumhq.selenium%7Cselenium-java%7C2.53.0%7Cjar
 
